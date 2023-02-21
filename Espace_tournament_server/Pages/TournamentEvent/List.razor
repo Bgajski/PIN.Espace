@@ -1,0 +1,82 @@
+﻿@page "/espace-izbornik"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanEventRepository LanEventRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<div class="row mt-6">
+    <div class="col-3">
+        <NavLink href="espace-izbornik/kreiraj" class="btn btn-info form-control">
+            Kreirajte novi turnir
+        </NavLink>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Naziv turnira</th>
+                    <th>Broj timova</th>
+                    <th>Nagradni fond</th>
+                    <th>Datum početka turnira</th>
+                    <th>Datum kraja turnira</th>
+                    <th>Cijena registracije po timu</th>
+                    <th>Izmjene</th>
+                    <th>Aktivacija</th>
+                    <th>Brisanje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (LanEvents.Any())
+                {
+                    foreach (var lanEvent in LanEvents)
+                    {
+                        <tr>
+                            <td>@lanEvent.Name</td>
+                            <td>@lanEvent.Teams</td>
+                            <td>@lanEvent.Reward</td>
+                            <td>@lanEvent.Starting</td>
+                            <td>@lanEvent.Ending</td>
+                            <td>@lanEvent.Price</td>
+                            <td>
+                                <NavLink href="@($"espace-izbornik/izmjeni/{lanEvent.EventId}")" class="btn btn-primary">Izmjeni</NavLink>
+                            </td>
+                            <td>
+                                <NavLink href="@($"/espace-turniri/izmjeni/{lanEvent.EventId}")" class="btn btn-warning">Aktiviraj</NavLink>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" @onclick="()=> DeleteLanEvent(lanEvent.EventId)">Obriši</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colsapn="3">Nema kreiranih turnira</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<LanEventDTO> LanEvents { get; set; } = new List<LanEventDTO>();
+    private int? DeleteEventId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        LanEvents = await LanEventRepository.GetLanEvents();
+    }
+
+    private async Task DeleteLanEvent(int DeleteEventId)
+    {
+        await LanEventRepository.DeleteLanEvent(DeleteEventId);
+        LanEvents = await LanEventRepository.GetLanEvents();
+    }
+}

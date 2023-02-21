@@ -1,0 +1,93 @@
+﻿@page "/espace-izbornik/kreiraj"
+@page "/espace-izbornik/izmjeni/{EventId:int}"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanEventRepository LanEventRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<div class="row mt-8">
+    <div class="col-5">
+        <h4 class="card-title text-info">
+            Kreirajte turnir
+        </h4>
+    </div>
+</div>
+
+<div class="row mt-6">
+    <div class="col-5">
+        <div class="card-body">
+            <EditForm Model="@LanEventModel" OnValidSubmit="CreateUpdateLanEvent">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <label>Naziv turnira</label>
+                    <InputText @bind-Value="@LanEventModel.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <label>Broj timova</label>
+                    <InputNumber @bind-Value="@LanEventModel.Teams" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group">
+                    <label>Nagradni fond</label>
+                    <InputNumber @bind-Value="@LanEventModel.Reward" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group">
+                    <label>Datum početka turnira</label>
+                    <InputDate @bind-Value="@LanEventModel.Starting" class="form-control"></InputDate>
+                </div>
+                <div class="form-group">
+                    <label>Datum kraja turnira</label>
+                    <InputDate @bind-Value="@LanEventModel.Ending" class="form-control"></InputDate>
+                </div>
+                <div class="form-group">
+                    <label>Cijena upada po timu</label>
+                    <InputNumber @bind-Value="@LanEventModel.Price" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Spremi</button>
+                    <NavLink href="espace-izbornik" class="btn btn-secondary">Odustani</NavLink>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int? EventId { get; set; }
+    private LanEventDTO LanEventModel { get; set; } = new LanEventDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (EventId != null)
+        {
+            LanEventModel = await LanEventRepository.GetLanEvent(EventId.Value);
+        }
+        else
+        {
+            LanEventModel = new LanEventDTO();
+        }
+    }
+
+    private async Task CreateUpdateLanEvent()
+    {
+        try
+        {
+            if (LanEventModel.EventId != 0)
+            {
+                var updateEventResult = await LanEventRepository.UpdateLanEvent(LanEventModel.EventId, LanEventModel);
+            }
+
+            else
+            {
+                var createdEventResult = await LanEventRepository.CreateLanEvent(LanEventModel);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred: " + ex.Message);
+        }
+        NavigationManager.NavigateTo("espace-izbornik");
+    }
+}

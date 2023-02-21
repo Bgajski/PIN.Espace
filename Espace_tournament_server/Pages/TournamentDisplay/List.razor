@@ -1,0 +1,74 @@
+﻿@page "/espace-turniri"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanDisplayRepository LanDisplayRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<div class="row mt-8">
+    <div class="col-5">
+        <h1 class="card-title text-info text-danger">
+            ESPACE - TURNIRI
+        </h1>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover" style="background-color:darkviolet">
+            <thead>
+                <tr>
+                    <th>Turnir</th>
+                    <th>Žanr</th>
+                    <th>Naziv igre</th>
+                    <th>Broj timova</th>
+                    <th>Nagradni fond</th>
+                    <th>Datum početka turnira</th>
+                    <th>Datum kraja turnira</th>
+                    <th>Cijena registracije po timu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lansDisplay.Any())
+                {
+                    @foreach (var lansDisplay in lansDisplay)
+                    {
+                        <tr>
+                            <td>@lansDisplay.Name</td>
+                            <td>@lansDisplay.GameGenre</td>
+                            <td>@lansDisplay.GameName</td>
+                            <td>@lansDisplay.Teams</td>
+                            <td>@lansDisplay.Reward</td>
+                            <td>@lansDisplay.Starting</td>
+                            <td>@lansDisplay.Ending</td>
+                            <td>@lansDisplay.Price</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colsapn="5">Nema aktivnih turnira</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<LanDisplayDTO> lansDisplay;
+
+    protected override async Task OnInitializedAsync()
+    {
+        lansDisplay = await LanDisplayRepository.GetLansDisplay();
+    }
+}
+
+<style>
+    body {
+        background-image: url('/images/image.1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>

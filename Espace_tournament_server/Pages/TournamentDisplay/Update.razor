@@ -1,0 +1,64 @@
+﻿@page "/espace-turniri/izmjeni/{EventId:int}"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanDisplayRepository LanDisplayRepository
+@inject ILanEventRepository LanEventRepository
+@inject ILanGameRepository LanGameRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="form-group">
+            @if (games.Any())
+            {
+                <label for="game-dropdown">Odaberite videoigru za turnir</label>
+                <select class="form-control" id="game-dropdown" @bind="SelectedGameId">
+                    <option value=""></option>
+                    @foreach (var game in games)
+                    {
+                        <option value="@game.GameId">@game.Name</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <div class="row mt-8">
+                    <div class="col-5">
+                        <h1 class="text-info text-danger">
+                            Nemate dostupnih igara za aktivaciju turnira, molimo dodajte videoigre u katalog igara!
+                        </h1>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="btn btn-primary" @onclick="UpdateLanDisplay">Spremi</button>
+        <NavLink href="espace-izbornik" class="btn btn-secondary">Odustani</NavLink>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int eventId { get; set; }
+    private LanDisplayDTO LanDisplay { get; set; }
+    private IEnumerable<LanGameDTO> games;
+    private int SelectedGameId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        games = await LanGameRepository.GetLanGames();
+    }
+
+    private async Task UpdateLanDisplay()
+    {
+        var existingEvent = await LanEventRepository.GetLanEvent(eventId);
+        if (existingEvent == null)
+        {
+            // return an error message
+            return;
+        }
+        existingEvent.LanGameId = SelectedGameId;
+        await LanEventRepository.UpdateLanEvent(eventId, existingEvent);
+        NavigationManager.NavigateTo("espace-turniri");
+    }
+}

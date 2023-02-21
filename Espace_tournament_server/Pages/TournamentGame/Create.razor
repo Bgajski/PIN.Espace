@@ -1,0 +1,60 @@
+﻿@page "/espace-katalog/kreiraj"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanGameRepository LanGameRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<div class="row mt-8">
+    <div class="col-5">
+        <h4 class="card-title text-info">
+            Dodajte igru u katalog
+        </h4>
+    </div>
+</div>
+
+<div class="row mt-6">
+    <div class="col-5">
+        <div class="card-body">
+            <EditForm Model="@LanGameModel" OnValidSubmit="CreateLanGame">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <label>Naziv videoigre</label>
+                    <InputText @bind-Value="@LanGameModel.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <label>Žanr videoigre</label>
+                    <select @bind="@LanGameModel.Genre" class="form-control">
+                        @foreach (var genre in _genres)
+                        {
+                            <option value="@genre">@genre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Spremi igru </button>
+                    <NavLink href="espace-katalog" class="btn btn-secondary">Odustani</NavLink>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<string> _genres = new List<string> { "FPS", "MOBA", "Battle royale" };
+    private LanGameDTO LanGameModel { get; set; } = new LanGameDTO();
+
+    private async Task CreateLanGame()
+    {
+        if (!_genres.Contains(LanGameModel.Genre))
+        {
+            // show error message to user
+            return;
+        }
+
+        await LanGameRepository.CreateLanGame(LanGameModel);
+
+        NavigationManager.NavigateTo("espace-katalog");
+    }
+}

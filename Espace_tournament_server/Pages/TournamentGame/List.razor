@@ -1,0 +1,66 @@
+﻿@page "/espace-katalog"
+@using Logic.Repository.IRepository
+@using Models
+@inject ILanGameRepository LanGameRepository
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<div class="row mt-6">
+    <div class="col-3">
+        <NavLink href="/espace-katalog/kreiraj" class="btn btn-info form-control">
+            Kreirajte katalog videoigara
+        </NavLink>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-6">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Naziv videoigre</th>
+                    <th>Žanr videoigre</th>
+                    <th>Brisanje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (LanGames.Any())
+                {
+                    foreach (var lanGame in LanGames)
+                    {
+                        <tr>
+                            <td>@lanGame.Name</td>
+                            <td>@lanGame.Genre</td>
+                            <td>
+                                <button class="btn btn-danger" @onclick="()=> DeleteLanGame(lanGame.GameId)">Obriši</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colsapn="3">Katalog igara je prazan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<LanGameDTO> LanGames { get; set; } = new List<LanGameDTO>();
+    private int? DeleteGameId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        LanGames = await LanGameRepository.GetLanGames();
+    }
+
+    private async Task DeleteLanGame(int DeleteGameId)
+    {
+        await LanGameRepository.DeleteLanGame(DeleteGameId);
+        LanGames = await LanGameRepository.GetLanGames();
+    }
+}
