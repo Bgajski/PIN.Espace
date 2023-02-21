@@ -7,7 +7,6 @@ namespace DataAccess.Data
     {
         [Key]
         public int GameId { get; set; }
-        [Required]
         public string Name { get; set; }
         public string Genre { get; set; }
         public ICollection<LanEvent> LanEvents { get; set; }
