@@ -33,16 +33,16 @@
                 {
                     @foreach (var lansDisplay in lansDisplay)
                     {
-                        <tr>
-                            <td>@lansDisplay.Name</td>
-                            <td>@lansDisplay.GameGenre</td>
-                            <td>@lansDisplay.GameName</td>
-                            <td>@lansDisplay.Teams</td>
-                            <td>@lansDisplay.Reward</td>
-                            <td>@lansDisplay.Starting</td>
-                            <td>@lansDisplay.Ending</td>
-                            <td>@lansDisplay.Price</td>
-                        </tr>
+                <tr>
+                    <td>@lansDisplay.Name</td>
+                    <td>@lansDisplay.GameGenre</td>
+                    <td>@lansDisplay.GameName</td>
+                    <td>@lansDisplay.Teams</td>
+                    <td>@lansDisplay.Reward</td>
+                    <td>@lansDisplay.Starting.ToShortDateString()</td>
+                    <td>@lansDisplay.Ending.ToShortDateString()</td>
+                    <td>@lansDisplay.Price</td>
+                </tr>
                     }
                 }
                 else

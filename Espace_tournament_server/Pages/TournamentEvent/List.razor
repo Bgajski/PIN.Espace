@@ -38,8 +38,8 @@
                             <td>@lanEvent.Name</td>
                             <td>@lanEvent.Teams</td>
                             <td>@lanEvent.Reward</td>
-                            <td>@lanEvent.Starting</td>
-                            <td>@lanEvent.Ending</td>
+                            <td>@lanEvent.Starting.ToShortDateString()</td>
+                            <td>@lanEvent.Ending.ToShortDateString()</td>
                             <td>@lanEvent.Price</td>
                             <td>
                                 <NavLink href="@($"espace-izbornik/izmjeni/{lanEvent.EventId}")" class="btn btn-primary">Izmjeni</NavLink>
