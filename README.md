@@ -21,28 +21,6 @@ Fetch and Display Details: The LanDisplayRepository is used to retrieve and disp
 
 Database Context: The context class (ApplicationDbContext) that manages the database connection and is used to query and save data. It includes:
 
-DbSet"<LanEvent>": Represents LAN events in the database.
-
-DbSet"<LanGame>": Represents LAN games in the database.
-
-Relationships and configurations are defined in OnModelCreating.
-
-Espace_tournament_server
-
-Controllers: Handle HTTP requests and return responses to the client.
-
-API Endpoints: Define the routes and actions available for interacting with the server-side logic.
-
-# Logic
-Services: Contain business logic and rules, acting as an intermediary between the controllers and the data access layer. For example, LanEventRepository and LanGameRepository.
-
-Business Rules: Implement rules and procedures that dictate how the application operates.
-
-# Models
-Entities: Define the structure of data stored in the database, such as LanEvent and LanGame.
-
-DTOs (Data Transfer Objects): Used to transfer data between the client and server.
-
 # Prerequisites
 .NET SDK 5.0 or later
 
