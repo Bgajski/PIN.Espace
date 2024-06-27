@@ -1,10 +1,10 @@
-#Vsite PIN project - Blazor template application
+# Vsite PIN project - Blazor template application
 
-#Overview
+# Overview
 VSITE.PIN.Espace is a Blazor-based template application designed for educational purposes. 
 It includes CRUD operations and features to support tournament management.
 
-#Features
+# Features
 CRUD Operations
 Create: Allows users to add new entities to the database, such as LAN events and games.
 Read: Fetch and display data from the database, providing detailed views of entities.
@@ -13,9 +13,9 @@ Delete: Remove entities from the database, maintaining data integrity and releva
 Display of Tournaments
 Fetch and Display Details: The LanDisplayRepository is used to retrieve and display LAN event details, including event name, game genre, game name, number of teams, reward, start and end dates, and price.
 
-##Project Structure
+## Project Structure
 
-#DataAccess
+# DataAccess
 Repositories: Classes responsible for encapsulating the logic required to access data sources.
 Database Context: The context class (ApplicationDbContext) that manages the database connection and is used to query and save data. It includes:
 DbSet<LanEvent>: Represents LAN events in the database.
@@ -25,18 +25,18 @@ Espace_tournament_server
 Controllers: Handle HTTP requests and return responses to the client.
 API Endpoints: Define the routes and actions available for interacting with the server-side logic.
 
-#Logic
+# Logic
 Services: Contain business logic and rules, acting as an intermediary between the controllers and the data access layer. For example, LanEventRepository and LanGameRepository.
 Business Rules: Implement rules and procedures that dictate how the application operates.
 
-#Models
+# Models
 Entities: Define the structure of data stored in the database, such as LanEvent and LanGame.
 DTOs (Data Transfer Objects): Used to transfer data between the client and server.
 
-#Prerequisites
+# Prerequisites
 .NET SDK 5.0 or later
 
-#Libraries and Dependencies
+# Libraries and Dependencies
 Blazor: For building interactive web UIs.
 Entity Framework Core: For database interactions.
 Microsoft.AspNetCore.Components: For Blazor components.
@@ -44,5 +44,5 @@ Microsoft.Extensions.Logging: For logging.
 Contributing
 Contributions are welcome. Please fork the repository and submit pull requests.
 
-#License
+# License
 This project is licensed under the MIT License.
