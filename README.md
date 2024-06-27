@@ -1,5 +1,5 @@
 # Vsite PIN project - Blazor crud application
-VSITE.PIN.Espace is a Blazor-based template application designed for educational purposes. 
+VSITE.PIN.Espace is a Blazor-based application designed for educational purposes. 
 It includes CRUD operations and features to support tournament management.
 
 # DataAccess
