@@ -2,21 +2,6 @@
 VSITE.PIN.Espace is a Blazor-based template application designed for educational purposes. 
 It includes CRUD operations and features to support tournament management.
 
-# Features
-CRUD Operations
-
-Create: Allows users to add new entities to the database, such as LAN events and games.
-
-Read: Fetch and display data from the database, providing detailed views of entities.
-
-Update: Modify existing records in the database, ensuring data remains current and accurate.
-
-Delete: Remove entities from the database, maintaining data integrity and relevance.
-
-Display of Tournaments
-
-Fetch and Display Details: The LanDisplayRepository is used to retrieve and display LAN event details, including event name, game genre, game name, number of teams, reward, start and end dates, and price.
-
 # DataAccess
 
 Database Context: The context class (ApplicationDbContext) that manages the database connection and is used to query and save data. It includes:
