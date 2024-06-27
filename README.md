@@ -13,7 +13,7 @@ Delete: Remove entities from the database, maintaining data integrity and releva
 Display of Tournaments
 Fetch and Display Details: The LanDisplayRepository is used to retrieve and display LAN event details, including event name, game genre, game name, number of teams, reward, start and end dates, and price.
 
-## Project Structure
+# Project Structure
 
 # DataAccess
 Repositories: Classes responsible for encapsulating the logic required to access data sources.
