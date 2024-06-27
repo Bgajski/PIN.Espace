@@ -18,13 +18,12 @@ Display of Tournaments
 Fetch and Display Details: The LanDisplayRepository is used to retrieve and display LAN event details, including event name, game genre, game name, number of teams, reward, start and end dates, and price.
 
 # DataAccess
-Repositories: Classes responsible for encapsulating the logic required to access data sources.
 
 Database Context: The context class (ApplicationDbContext) that manages the database connection and is used to query and save data. It includes:
 
-DbSet<LanEvent>: Represents LAN events in the database.
+DbSet"<LanEvent>": Represents LAN events in the database.
 
-DbSet<LanGame>: Represents LAN games in the database.
+DbSet"<LanGame>": Represents LAN games in the database.
 
 Relationships and configurations are defined in OnModelCreating.
 
